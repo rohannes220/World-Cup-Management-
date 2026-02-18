@@ -13,9 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     outputBox.innerHTML = "";
 
-    // =====================
-    // VIEW GROUP STAGE
-    // =====================
+
     if (gameAction.value === "viewGroup") {
 
       const response = await fetch(`${API}/api/games/group`);
@@ -44,9 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
       outputBox.innerHTML = html;
     }
 
-    // =====================
-    // VIEW KNOCKOUT
-    // =====================
     if (gameAction.value === "viewKnockout") {
 
       const response = await fetch(`${API}/api/games/knockout`);
