@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Infrastructure Management</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <header class="toolbar">
+        <h1>World Cup Manager</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="infrastructure.html">Infrastructure</a>
+            <a href="Data.html">Records</a>
+        </nav>
+    </header>
+<h2>System Data Overview</h2>
+
+<div class="cards-container">
+
+    <!-- Cities Data Card -->
+    <div class="card">
+        <h3>Cities Collection</h3>
+
+        <button id="loadCities">Load Cities Data</button>
+
+        <div class="output-box" id="citiesDataOutput">
+            Click to load cities data.
+        </div>
+    </div>
+
+    <!-- Games Data Card -->
+    <div class="card">
+        <h3>Games Collection</h3>
+
+        <button id="loadGames">Load Games Data</button>
+
+        <div class="output-box" id="gamesDataOutput">
+            Click to load games data.
+        </div>
+    </div>
+
+</div>
+
+<script type="module" src="js/data.js"></script>
+
+</body>
+
+</html>

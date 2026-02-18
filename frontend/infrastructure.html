@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Infrastructure Management</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <header class="toolbar">
+        <h1>World Cup Manager</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="infrastructure.html">Infrastructure</a>
+            <a href="Data.html">Records</a>
+        </nav>
+    </header>
+
+    <h2>Infrastructure Management</h2>
+
+    <div class="cards-container">
+
+        <div class="card">
+            <h3>Game Management</h3>
+
+            <select id="gameAction">
+            <option value="">Select Action</option>
+            <option value="viewGroup">View Group Stage Games</option>
+            <option value="viewKnockout">View Knockout Games</option>
+            <option value="update">Update Game</option>
+            </select>
+
+            <div id="gameFormContainer"></div>
+            <div class="output-box" id="gameOutput"></div>
+        </div>
+
+        <div class="card">
+            <h3>City Management</h3>
+
+            <select id="cityAction">
+                <option value="">Select Action</option>
+                <option value="viewCities">View All Cities</option>
+                <option value="viewStadiums">View All Stadiums</option>
+                <option value="addCity">Add City</option>
+                <option value="deleteCity">Delete City</option>
+            </select>
+
+     
+
+            <div id="cityFormContainer"></div>
+            <div class="output-box" id="cityOutput"></div>
+        </div>
+
+    </div>
+
+    <script type="module" src="js/cities.js"></script>
+    <script type="module" src="js/games.js"></script>
+
+</body>
+
+</html>

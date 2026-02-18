@@ -1,0 +1,309 @@
+[
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9cf"
+    },
+    "name": "Atlanta",
+    "country": "USA",
+    "stadiums": [
+      {
+        "name": "Mercedes-Benz Stadium",
+        "capacity": 71000,
+        "gameDates": [
+          "2026-06-15",
+          "2026-06-18",
+          "2026-06-21",
+          "2026-06-24",
+          "2026-06-27"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9d0"
+    },
+    "name": "Boston",
+    "country": "USA",
+    "stadiums": [
+      {
+        "name": "Gillette Stadium",
+        "capacity": 65878,
+        "gameDates": [
+          "2026-06-13",
+          "2026-06-19",
+          "2026-06-23",
+          "2026-06-26"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9d1"
+    },
+    "name": "Dallas",
+    "country": "USA",
+    "stadiums": [
+      {
+        "name": "AT&T Stadium",
+        "capacity": 80000,
+        "gameDates": [
+          "2026-06-14",
+          "2026-06-17",
+          "2026-06-22",
+          "2026-06-25",
+          "2026-06-27"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9d2"
+    },
+    "name": "Guadalajara",
+    "country": "Mexico",
+    "stadiums": [
+      {
+        "name": "Estadio Akron",
+        "capacity": 49850,
+        "gameDates": [
+          "2026-06-11",
+          "2026-06-18",
+          "2026-06-23",
+          "2026-06-26"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9d3"
+    },
+    "name": "Houston",
+    "country": "USA",
+    "stadiums": [
+      {
+        "name": "NRG Stadium",
+        "capacity": 72220,
+        "gameDates": [
+          "2026-06-14",
+          "2026-06-17",
+          "2026-06-20",
+          "2026-06-23",
+          "2026-06-26"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9d4"
+    },
+    "name": "Kansas City",
+    "country": "USA",
+    "stadiums": [
+      {
+        "name": "Arrowhead Stadium",
+        "capacity": 76416,
+        "gameDates": [
+          "2026-06-16",
+          "2026-06-20",
+          "2026-06-27"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9d5"
+    },
+    "name": "Los Angeles",
+    "country": "USA",
+    "stadiums": [
+      {
+        "name": "SoFi Stadium",
+        "capacity": 70240,
+        "gameDates": [
+          "2026-06-12",
+          "2026-06-15",
+          "2026-06-18",
+          "2026-06-21",
+          "2026-06-25"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9d6"
+    },
+    "name": "Mexico City",
+    "country": "Mexico",
+    "stadiums": [
+      {
+        "name": "Estadio Azteca",
+        "capacity": 87523,
+        "gameDates": [
+          "2026-06-11",
+          "2026-06-17",
+          "2026-06-24"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9d7"
+    },
+    "name": "Miami",
+    "country": "USA",
+    "stadiums": [
+      {
+        "name": "Hard Rock Stadium",
+        "capacity": 65326,
+        "gameDates": [
+          "2026-06-15",
+          "2026-06-21",
+          "2026-06-24",
+          "2026-06-27"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9d8"
+    },
+    "name": "Monterrey",
+    "country": "Mexico",
+    "stadiums": [
+      {
+        "name": "Estadio BBVA",
+        "capacity": 53500,
+        "gameDates": [
+          "2026-06-14",
+          "2026-06-20",
+          "2026-06-24"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9d9"
+    },
+    "name": "New York/New Jersey",
+    "country": "USA",
+    "stadiums": [
+      {
+        "name": "MetLife Stadium",
+        "capacity": 82500,
+        "gameDates": [
+          "2026-06-13",
+          "2026-06-16",
+          "2026-06-21"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9da"
+    },
+    "name": "Philadelphia",
+    "country": "USA",
+    "stadiums": [
+      {
+        "name": "Lincoln Financial Field",
+        "capacity": 69596,
+        "gameDates": [
+          "2026-06-14",
+          "2026-06-19",
+          "2026-06-22",
+          "2026-06-25"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9db"
+    },
+    "name": "San Francisco Bay Area",
+    "country": "USA",
+    "stadiums": [
+      {
+        "name": "Levi's Stadium",
+        "capacity": 68500,
+        "gameDates": [
+          "2026-06-13",
+          "2026-06-16",
+          "2026-06-19",
+          "2026-06-22",
+          "2026-06-25"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9dc"
+    },
+    "name": "Seattle",
+    "country": "USA",
+    "stadiums": [
+      {
+        "name": "Lumen Field",
+        "capacity": 68740,
+        "gameDates": [
+          "2026-06-15",
+          "2026-06-19",
+          "2026-06-24",
+          "2026-06-26"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9dd"
+    },
+    "name": "Toronto",
+    "country": "Canada",
+    "stadiums": [
+      {
+        "name": "BMO Field",
+        "capacity": 30000,
+        "gameDates": [
+          "2026-06-12",
+          "2026-06-17",
+          "2026-06-20",
+          "2026-06-23",
+          "2026-06-26"
+        ]
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "6990c6047993b3fe4fe9c9de"
+    },
+    "name": "Vancouver",
+    "country": "Canada",
+    "stadiums": [
+      {
+        "name": "BC Place",
+        "capacity": 54500,
+        "gameDates": [
+          "2026-06-13",
+          "2026-06-18",
+          "2026-06-21",
+          "2026-06-24",
+          "2026-06-26"
+        ]
+      }
+    ]
+  }
+]
