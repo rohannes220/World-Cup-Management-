@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// ================= VIEW CITIES =================
 async function renderViewCities() {
   const outputBox = document.getElementById("cityOutput");
 
@@ -49,7 +48,6 @@ async function renderViewCities() {
 }
 
 
-// ================= VIEW STADIUMS =================
 async function renderViewStadiums() {
   const outputBox = document.getElementById("cityOutput");
 
@@ -76,7 +74,7 @@ async function renderViewStadiums() {
 }
 
 
-// ================= DELETE CITY =================
+
 async function renderDeleteCity() {
   const outputBox = document.getElementById("cityOutput");
 
@@ -114,7 +112,6 @@ async function renderDeleteCity() {
 }
 
 
-// ================= ADD CITY =================
 function renderAddCity() {
   const outputBox = document.getElementById("cityOutput");
 
