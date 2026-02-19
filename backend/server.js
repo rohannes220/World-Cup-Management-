@@ -20,8 +20,8 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "../frontend")));
 
 const PORT = 3000;
-const MONGO_URL = "mongodb://127.0.0.1:27017";
-const DB_NAME = "worldcup";
+const MONGO_URL = process.env.DATABASE_URI;
+const DB_NAME = "WorldCup";
 
 const client = new MongoClient(MONGO_URL);
 
