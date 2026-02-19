@@ -26,6 +26,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (cityAction.value === "updateStadium") {
       renderUpdateStadium();
     }
+    if (cityAction.value === "deleteStadium") {
+      renderDeleteStadium();
+  }
   });
 });
 
@@ -140,6 +143,45 @@ function renderAddCity() {
     });
 
     outputBox.innerHTML = "City added successfully.";
+  });
+}
+function renderDeleteStadium() {
+  const outputBox = document.getElementById("cityOutput");
+
+  outputBox.innerHTML = `
+    <input type="text" id="cityNameInput" placeholder="City Name" />
+    <input type="text" id="stadiumInput" placeholder="Stadium Name" />
+    <button id="deleteStadiumBtn">Delete Stadium</button>
+  `;
+
+  document.getElementById("deleteStadiumBtn").addEventListener("click", async () => {
+    const name = document
+      .getElementById("cityNameInput")
+      .value
+      .toLowerCase();
+
+    const stadium = document.getElementById("stadiumInput").value;
+
+    if (!name || !stadium) {
+      alert("Fill both fields.");
+      return;
+    }
+
+    const response = await fetch(
+      `${API}/api/cities/name/${encodeURIComponent(name)}/delete`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ stadium })
+      }
+    );
+
+    if (!response.ok) {
+      outputBox.innerHTML = "City not found.";
+      return;
+    }
+
+    outputBox.innerHTML = "Stadium deleted successfully.";
   });
 }
 
