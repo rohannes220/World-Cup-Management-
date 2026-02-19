@@ -1,82 +1,24 @@
-const API = "http://localhost:3000";
-
 document.addEventListener("DOMContentLoaded", () => {
   const gameAction = document.getElementById("gameAction");
+  if (!gameAction) return;
 
   gameAction.addEventListener("change", () => {
     const outputBox = document.getElementById("gameOutput");
     outputBox.innerHTML = "";
 
-    if (gameAction.value === "viewGroup") {
-      renderViewGroup();
-    }
-
-    if (gameAction.value === "viewKnockout") {
-      renderViewKnockout();
-    }
-
-    if (gameAction.value === "updateGame") {
-      renderUpdateGame();
-    }
-
-    if (gameAction.value === "deleteGame") {
-      renderDeleteGame();
-    }
-
-    if (gameAction.value === "createFriendly") {
-      renderCreateFriendly();
-    }
-    if (gameAction.value === "totalGames") {
-      renderTotalGameStats();
-    }
-    if (gameAction.value === "groupGames") {
-      renderTotalGroupGames();
-    }
-    if (gameAction.value === "totalKnockoutGames") {
-      renderTotalKnockoutGames();
-    }
+    if (gameAction.value === "viewGroup") showGroupGames();
+    if (gameAction.value === "viewKnockout") showKnockoutGames();
+    if (gameAction.value === "totalGames") showTotalGames();
+    if (gameAction.value === "totalGroup") showTotalGroupGames();
+    if (gameAction.value === "totalKnockout") showTotalKnockoutGames();
+    if (gameAction.value === "updateGame") showUpdateGame();
+    if (gameAction.value === "deleteGame") showDeleteGame();
+    if (gameAction.value === "createFriendly") showCreateFriendly();
   });
 });
 
-async function renderTotalKnockoutGames() {
-  const outputBox = document.getElementById("gameOutput");
-
-  const res = await fetch(`${API}/api/games/stats/knockout`);
-  const data = await res.json();
-
-  outputBox.innerHTML = `
-    <p><strong>Total Knockout Games:</strong> ${data.totalKnockout}</p>
-  `;
-}
-async function renderTotalGroupGames() {
-  const outputBox = document.getElementById("gameOutput");
-
-  const res = await fetch(`${API}/api/games/stats/group`);
-  const data = await res.json();
-
-  outputBox.innerHTML = `
-    <p><strong>Total Group Stage Games:</strong> ${data.totalGroupStage}</p>
-  `;
-}
-
-async function renderTotalGameStats() {
-  const outputBox = document.getElementById("gameOutput");
-
-  const res = await fetch(`${API}/api/games/stats`);
-  const stats = await res.json();
-
-  outputBox.innerHTML = `
-    <div>
-      <h3>Game Statistics</h3>
-      <p><strong>Total Games:</strong> ${stats.totalGames}</p>
-    </div>
-  `;
-}
-
-async function renderViewGroup() {
-  const outputBox = document.getElementById("gameOutput");
-
-  const res = await fetch(`${API}/api/games/group`);
+async function showGroupGames() {
+  const res = await fetch("/api/games/group");
   const games = await res.json();
 
   let html = "<ul style='list-style:none;padding-left:0;'>";
@@ -84,23 +26,19 @@ async function renderViewGroup() {
   games.forEach(game => {
     html += `
       <li style="margin-bottom:15px;">
-        <strong>Match #${game.matchNo}</strong>
-        <br>
-        ${game.homeTeam} vs ${game.awayTeam}
-        <br>
+        <strong>Match #${game.matchNo}</strong><br>
+        ${game.homeTeam} vs ${game.awayTeam}<br>
         Winner: ${game.winner || "Not decided"}
       </li>
     `;
   });
 
   html += "</ul>";
-  outputBox.innerHTML = html;
+  document.getElementById("gameOutput").innerHTML = html;
 }
 
-async function renderViewKnockout() {
-  const outputBox = document.getElementById("gameOutput");
-
-  const res = await fetch(`${API}/api/games/knockout`);
+async function showKnockoutGames() {
+  const res = await fetch("/api/games/knockout");
   const games = await res.json();
 
   let html = "<ul style='list-style:none;padding-left:0;'>";
@@ -108,22 +46,43 @@ async function renderViewKnockout() {
   games.forEach(game => {
     html += `
       <li style="margin-bottom:15px;">
-        <strong>Match #${game.matchNo || "Friendly"}</strong>
-        <br>
-        ${game.homeTeam} vs ${game.awayTeam}
-        <br>
-        Round: ${game.round}
-        <br>
+        <strong>Match #${game.matchNo}</strong><br>
+        ${game.homeTeam} vs ${game.awayTeam}<br>
+        Round: ${game.round}<br>
         Winner: ${game.winner || "Not decided"}
       </li>
     `;
   });
 
   html += "</ul>";
-  outputBox.innerHTML = html;
+  document.getElementById("gameOutput").innerHTML = html;
 }
 
-function renderUpdateGame() {
+async function showTotalGames() {
+  const res = await fetch("/api/games/stats");
+  const data = await res.json();
+
+  document.getElementById("gameOutput").innerHTML =
+    `<p><strong>Total Games:</strong> ${data.totalGames}</p>`;
+}
+
+async function showTotalGroupGames() {
+  const res = await fetch("/api/games/stats/group");
+  const data = await res.json();
+
+  document.getElementById("gameOutput").innerHTML =
+    `<p><strong>Total Group Stage Games:</strong> ${data.totalGroupStage}</p>`;
+}
+
+async function showTotalKnockoutGames() {
+  const res = await fetch("/api/games/stats/knockout");
+  const data = await res.json();
+
+  document.getElementById("gameOutput").innerHTML =
+    `<p><strong>Total Knockout Games:</strong> ${data.totalKnockout}</p>`;
+}
+
+function showUpdateGame() {
   const outputBox = document.getElementById("gameOutput");
 
   outputBox.innerHTML = `
@@ -143,7 +102,7 @@ function renderUpdateGame() {
       return;
     }
 
-    const response = await fetch(`${API}/api/games/match/${matchNo}`, {
+    const response = await fetch(`/api/games/match/${matchNo}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ winner })
@@ -158,7 +117,7 @@ function renderUpdateGame() {
   });
 }
 
-function renderDeleteGame() {
+function showDeleteGame() {
   const outputBox = document.getElementById("gameOutput");
 
   outputBox.innerHTML = `
@@ -170,25 +129,15 @@ function renderDeleteGame() {
   document.getElementById("deleteBtn").addEventListener("click", async () => {
     const matchNo = document.getElementById("deleteMatchInput").value;
 
-    if (!matchNo) {
-      alert("Enter match number.");
-      return;
-    }
-
-    const response = await fetch(`${API}/api/games/match/${matchNo}`, {
+    await fetch(`/api/games/match/${matchNo}`, {
       method: "DELETE"
     });
-
-    if (!response.ok) {
-      outputBox.innerHTML = "Game not found.";
-      return;
-    }
 
     outputBox.innerHTML = "Game deleted successfully.";
   });
 }
 
-function renderCreateFriendly() {
+function showCreateFriendly() {
   const outputBox = document.getElementById("gameOutput");
 
   outputBox.innerHTML = `
@@ -206,19 +155,10 @@ function renderCreateFriendly() {
     const homeTeam = document.getElementById("homeInput").value;
     const awayTeam = document.getElementById("awayInput").value;
 
-    if (!matchNo || !homeTeam || !awayTeam) {
-      alert("Fill all fields.");
-      return;
-    }
-
-    await fetch(`${API}/api/games/friendly`, {
+    await fetch("/api/games/friendly", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        matchNo,
-        homeTeam,
-        awayTeam
-      })
+      body: JSON.stringify({ matchNo, homeTeam, awayTeam })
     });
 
     outputBox.innerHTML = "Friendly match scheduled successfully.";
