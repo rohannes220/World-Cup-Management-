@@ -1,8 +1,8 @@
 *Author*
 
-*Class Link: *
+*Class Link:*
 
-*Project Objective8
+*Project Objective*
 
 *Screenshot*
 
