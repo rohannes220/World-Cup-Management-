@@ -1,12 +1,21 @@
 import {MongoClient} from "mongodb";
 
+let client;
+
 export const connectDB = () => {
     try {
-        const client = new MongoClient(process.env.DATABASE_URI);
+        client = new MongoClient(process.env.DATABASE_URI);
         client.connect();
         return client;
     }
     catch (err) {
         console.log(err);
     }
+}
+
+export const getDB = () => {
+    if (!client) {
+        throw new Error("Database not connected");
+    }
+    return client.db("WorldCup");
 }

@@ -22,3 +22,6 @@ app.use("/api/teams", teamsRoutes(client.db("WorldCup")));
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 });
+
+// ideas:
+// add map
