@@ -31,5 +31,34 @@ export default function citiesRoutes(db) {
     res.json({ message: "City deleted successfully" });
   });
 
+  router.put("/name/:name", async (req, res) => {
+    const inputName = req.params.name.toLowerCase();
+    const { stadium, occupancy } = req.body;
+
+    const cities = await db.collection("cities").find({}).toArray();
+
+    const city = cities.find(
+      c => c.name.toLowerCase() === inputName
+    );
+
+    if (!city) {
+      return res.status(404).json({ message: "City not found" });
+    }
+
+    await db.collection("cities").updateOne(
+      { _id: city._id },
+      {
+        $push: {
+          stadiums: {
+            name: stadium,
+            occupancy: Number(occupancy)
+          }
+        }
+      }
+    );
+
+    res.json({ message: "Success! Operation done." });
+  });
+
   return router;
 }

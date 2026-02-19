@@ -2,9 +2,10 @@ const API = "http://localhost:3000";
 
 document.addEventListener("DOMContentLoaded", () => {
   const cityAction = document.getElementById("cityAction");
-  const outputBox = document.getElementById("cityOutput");
 
   cityAction.addEventListener("change", () => {
+    const outputBox = document.getElementById("cityOutput");
+    outputBox.innerHTML = "";
 
     if (cityAction.value === "viewCities") {
       renderViewCities();
@@ -17,16 +18,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (cityAction.value === "deleteCity") {
       renderDeleteCity();
     }
-    
-    if (cityAction.value === "addCity") {
-     renderAddCity();
-  }
 
+    if (cityAction.value === "addCity") {
+      renderAddCity();
+    }
+
+    if (cityAction.value === "updateStadium") {
+      renderUpdateStadium();
+    }
   });
 });
 
-
-// ================= VIEW CITIES =================
 async function renderViewCities() {
   const outputBox = document.getElementById("cityOutput");
 
@@ -44,12 +46,9 @@ async function renderViewCities() {
   });
 
   html += "</ul>";
-
   outputBox.innerHTML = html;
 }
 
-
-// ================= VIEW STADIUMS =================
 async function renderViewStadiums() {
   const outputBox = document.getElementById("cityOutput");
 
@@ -59,11 +58,15 @@ async function renderViewStadiums() {
   let html = "<ul style='list-style:none;padding-left:0;'>";
 
   cities.forEach(city => {
-    if (city.stadiums) {
+    if (city.stadiums && city.stadiums.length > 0) {
       city.stadiums.forEach(stadium => {
         html += `
           <li style="margin-bottom:10px;">
-            <strong>${stadium.name}</strong> — ${city.name}, ${city.country}
+            <strong>${stadium.name}</strong>
+            <br>
+            City: ${city.name}
+            <br>
+            Occupancy: ${stadium.capacity}
           </li>
         `;
       });
@@ -72,11 +75,9 @@ async function renderViewStadiums() {
 
   html += "</ul>";
 
-  outputBox.innerHTML = html || "No stadiums found.";
+  outputBox.innerHTML = html;
 }
 
-
-// ================= DELETE CITY =================
 async function renderDeleteCity() {
   const outputBox = document.getElementById("cityOutput");
 
@@ -97,7 +98,6 @@ async function renderDeleteCity() {
   });
 
   html += "</ul>";
-
   outputBox.innerHTML = html;
 
   document.querySelectorAll(".deleteBtn").forEach(btn => {
@@ -113,8 +113,6 @@ async function renderDeleteCity() {
   });
 }
 
-
-// ================= ADD CITY =================
 function renderAddCity() {
   const outputBox = document.getElementById("cityOutput");
 
@@ -137,12 +135,59 @@ function renderAddCity() {
 
     await fetch(`${API}/api/cities`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, country })
     });
 
     outputBox.innerHTML = "City added successfully.";
+  });
+}
+
+function renderUpdateStadium() {
+  const outputBox = document.getElementById("cityOutput");
+
+  outputBox.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:10px;">
+      <input type="text" id="cityNameInput" placeholder="City Name" />
+      <input type="text" id="stadiumInput" placeholder="Stadium Name" />
+      <input type="number" id="occupancyInput" placeholder="Occupancy" />
+      <button id="updateStadiumBtn">Add Stadium</button>
+    </div>
+  `;
+
+  document.getElementById("updateStadiumBtn").addEventListener("click", async () => {
+
+    const name = document
+      .getElementById("cityNameInput")
+      .value
+      .toLowerCase();
+
+    const stadium = document.getElementById("stadiumInput").value;
+    const occupancy = document.getElementById("occupancyInput").value;
+
+    if (!name || !stadium || !occupancy) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    const response = await fetch(
+      `${API}/api/cities/name/${encodeURIComponent(name)}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ stadium, occupancy })
+      }
+    );
+
+    if (!response.ok) {
+      outputBox.innerHTML = "City not found.";
+      return;
+    }
+
+    outputBox.innerHTML = `
+      <div style="padding:10px; border:1px solid #4CAF50; color:#4CAF50;">
+        <strong>Success! Operation done.</strong>
+      </div>
+    `;
   });
 }
