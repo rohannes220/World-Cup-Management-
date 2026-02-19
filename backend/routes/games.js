@@ -11,6 +11,7 @@ export default function gamesRoutes(db) {
   router.get("/group", async (req, res) => {
     const games = await db.collection("games")
       .find({ round: "Group Stage" })
+      .sort({ matchNo: 1 }) 
       .toArray();
     res.json(games);
   });
@@ -18,6 +19,7 @@ export default function gamesRoutes(db) {
   router.get("/knockout", async (req, res) => {
     const games = await db.collection("games")
       .find({ round: { $ne: "Group Stage" } })
+      .sort({ matchNo: 73 }) 
       .toArray();
     res.json(games);
   });

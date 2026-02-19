@@ -26,25 +26,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
       let html = "<ul style='list-style:none;padding-left:0;'>";
 
-      games.forEach(game => {
+     games.forEach(game => {
         html += `
-          <li style="margin-bottom:10px;">
-            <strong>${game.homeTeam} vs ${game.awayTeam}</strong>
+           <li style="margin-bottom:15px;">
+            <strong>Match #${game.matchNo}</strong>
+            <br>
+            ${game.homeTeam} vs ${game.awayTeam}
             <br>
             Round: ${game.round}
             <br>
             Date: ${game.date || "TBD"}
+            <br>
+            Winner: ${game.winner || "Not decided"}
           </li>
         `;
       });
+
 
       html += "</ul>";
       outputBox.innerHTML = html;
     }
 
-    // =====================
-    // VIEW KNOCKOUT
-    // =====================
+  
     if (gameAction.value === "viewKnockout") {
 
       const response = await fetch(`${API}/api/games/knockout`);
@@ -59,12 +62,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       games.forEach(game => {
         html += `
-          <li style="margin-bottom:10px;">
-            <strong>${game.homeTeam} vs ${game.awayTeam}</strong>
+           <li style="margin-bottom:15px;">
+            <strong>Match #${game.matchNo}</strong>
+            <br>
+            ${game.homeTeam} vs ${game.awayTeam}
             <br>
             Round: ${game.round}
             <br>
             Date: ${game.date || "TBD"}
+            <br>
+            Winner: ${game.winner || "Not decided"}
           </li>
         `;
       });
