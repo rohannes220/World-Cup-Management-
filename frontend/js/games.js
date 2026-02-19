@@ -26,8 +26,52 @@ document.addEventListener("DOMContentLoaded", () => {
     if (gameAction.value === "createFriendly") {
       renderCreateFriendly();
     }
+    if (gameAction.value === "totalGames") {
+      renderTotalGameStats();
+    }
+    if (gameAction.value === "groupGames") {
+      renderTotalGroupGames();
+    }
+    if (gameAction.value === "totalKnockoutGames") {
+      renderTotalKnockoutGames();
+    }
   });
 });
+
+async function renderTotalKnockoutGames() {
+  const outputBox = document.getElementById("gameOutput");
+
+  const res = await fetch(`${API}/api/games/stats/knockout`);
+  const data = await res.json();
+
+  outputBox.innerHTML = `
+    <p><strong>Total Knockout Games:</strong> ${data.totalKnockout}</p>
+  `;
+}
+async function renderTotalGroupGames() {
+  const outputBox = document.getElementById("gameOutput");
+
+  const res = await fetch(`${API}/api/games/stats/group`);
+  const data = await res.json();
+
+  outputBox.innerHTML = `
+    <p><strong>Total Group Stage Games:</strong> ${data.totalGroupStage}</p>
+  `;
+}
+
+async function renderTotalGameStats() {
+  const outputBox = document.getElementById("gameOutput");
+
+  const res = await fetch(`${API}/api/games/stats`);
+  const stats = await res.json();
+
+  outputBox.innerHTML = `
+    <div>
+      <h3>Game Statistics</h3>
+      <p><strong>Total Games:</strong> ${stats.totalGames}</p>
+    </div>
+  `;
+}
 
 async function renderViewGroup() {
   const outputBox = document.getElementById("gameOutput");

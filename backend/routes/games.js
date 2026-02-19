@@ -23,12 +23,38 @@ export default function gamesRoutes(db) {
     res.json(games);
   });
 
-  router.get("/match/:matchNo", async (req, res) => {
-    const { matchNo } = req.params;
+  router.get("/stats", async (req, res) => {
+    try {
+      const totalGames = await db.collection("games").countDocuments();
+      res.json({ totalGames });
+    } catch (error) {
+      res.status(500).json({ message: "Error retrieving total games" });
+    }
+  });
 
-    const game = await db.collection("games").findOne({
-      matchNo: Number(matchNo)
-    });
+  router.get("/stats/group", async (req, res) => {
+    try {
+      const totalGroupStage = await db.collection("games")
+        .countDocuments({ round: "Group Stage" });
+      res.json({ totalGroupStage });
+    } catch (error) {
+      res.status(500).json({ message: "Error retrieving group stage games" });
+    }
+  });
+
+  router.get("/stats/knockout", async (req, res) => {
+    try {
+      const totalKnockout = await db.collection("games")
+        .countDocuments({ round: { $ne: "Group Stage" } });
+      res.json({ totalKnockout });
+    } catch (error) {
+      res.status(500).json({ message: "Error retrieving knockout games" });
+    }
+  });
+
+  router.get("/match/:matchNo", async (req, res) => {
+    const matchNo = Number(req.params.matchNo);
+    const game = await db.collection("games").findOne({ matchNo });
 
     if (!game) {
       return res.status(404).json({ message: "Game not found" });
@@ -54,30 +80,30 @@ export default function gamesRoutes(db) {
   });
 
   router.post("/friendly", async (req, res) => {
-  const { matchNo, homeTeam, awayTeam } = req.body;
+    const { matchNo, homeTeam, awayTeam } = req.body;
 
-  await db.collection("games").insertOne({
-    matchNo: Number(matchNo),
-    homeTeam,
-    awayTeam,
-    round: "Friendly",
-    winner: null
+    await db.collection("games").insertOne({
+      matchNo: Number(matchNo),
+      homeTeam,
+      awayTeam,
+      round: "Friendly",
+      winner: null
+    });
+
+    res.json({ message: "Friendly match scheduled successfully." });
   });
 
-  res.json({ message: "Friendly match scheduled successfully." });
-});
-
   router.delete("/match/:matchNo", async (req, res) => {
-  const matchNo = Number(req.params.matchNo);
+    const matchNo = Number(req.params.matchNo);
 
-  const result = await db.collection("games").deleteOne({ matchNo });
+    const result = await db.collection("games").deleteOne({ matchNo });
 
-  if (result.deletedCount === 0) {
-    return res.status(404).json({ message: "Game not found" });
-  }
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: "Game not found" });
+    }
 
-  res.json({ message: "Game deleted successfully." });
-});
+    res.json({ message: "Game deleted successfully." });
+  });
 
   return router;
 }
