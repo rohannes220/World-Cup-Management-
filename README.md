@@ -2,6 +2,11 @@
 
 # World Cup Management
 
+By Daniel Jilek - jilek.d@northeastern.edu, Rohan Kumar - kumar.rohan1@northeastern.edu
+Class: Web Development
+Term: Spring 2026
+Professor John Guerra
+
 ## Overview
 
 World Cup Management is a full-stack web application that centralizes tournament infrastructure and team management into a single system. The application allows organizers to manage host cities, stadiums, games, teams, and players through structured CRUD operations.
