@@ -126,7 +126,8 @@ The stadium field image used in this project was sourced from **Pexels** and is 
 # Screenshots
 
 
-
----
-
-If you want, I can now make a slightly more polished “professor-impressing” version that aligns perfectly with your CS5610 rubric language.
+1. Home Page
+   <img width="1424" height="707" alt="Screenshot 2026-02-20 at 6 53 46 PM" src="https://github.com/user-attachments/assets/6906876d-137b-47db-bb85-f34e1005fbdf" />
+2. Infrastructure
+  <img width="1415" height="702" alt="Screenshot 2026-02-20 at 6 54 26 PM" src="https://github.com/user-attachments/assets/f789d5f7-146e-473d-8969-d43363d43374" />
+4. Daniel add yours here 
