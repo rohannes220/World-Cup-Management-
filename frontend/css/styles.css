@@ -87,3 +87,38 @@ button {
 button:hover {
     background-color: #2563eb;
 }
+
+.blank-cell {
+    min-width: 300px;
+}
+
+.blank-header {
+    min-width: 100px;
+}
+
+.hidden {
+    display: none;
+}
+
+.team-row > td {
+    vertical-align: top;
+}
+
+.flag-img {
+    width: 40px;
+    height: 25px;
+    object-fit: cover;
+    margin-right: 10px;
+}   
+
+.country-name{
+    vertical-align: top;
+}
+
+.players-row {
+    height: 35px;
+}
+
+.players-row > td{
+    text-align: left;
+}
