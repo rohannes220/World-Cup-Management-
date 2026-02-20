@@ -98,7 +98,7 @@ http://localhost:3000
 Project slides and demo presentation materials are included in the repository.
 
 * Slides: https://docs.google.com/presentation/d/1rV23cOee0vkI9minWGmK202waGtKANA61lMYsIuQnnY/edit?usp=sharing
-* Demo Video: *(Add link here if applicable)*
+* Demo Video: *(Daniel add it here)*
 
 
 ## Design Document
@@ -109,11 +109,30 @@ The full design document, including project description, work distribution, user
 
 ---
 
-## AI Usage
+AI Usage
 
-AI tools were used to assist with backend architecture, MongoDB data modeling, and frontend–backend integration. AI helped clarify how to structure Express routes, manage embedded stadium data inside city documents, reference players to teams using ObjectId, and implement dynamic dropdown features populated from backend data.
+ChatGPT (GPT-5.2 model) was used to assist with backend architecture, CRUD operations, and frontend–backend integration. It helped clarify how to structure Express routes, organize MongoDB collections, and properly implement create, read, update, and delete functionality for cities, stadiums, games, teams, and players.
 
-AI was also used for debugging route responses, updating nested arrays in MongoDB, and validating form inputs. All CRUD logic, routing, and frontend functionality were implemented and structured by the team. AI served as an architectural and debugging assistant rather than a code generator.
+ChatGPT was also used to help design and implement dynamic dropdown features, including populating dropdown menus from backend data and filtering stadium options based on a selected city. Additionally, it assisted with debugging route responses, updating nested arrays in MongoDB (such as stadiums embedded within cities), and improving overall backend structure. All core implementation, routing, and application logic were written and structured by the team, with ChatGPT serving as a guidance and troubleshooting tool.
+
+ChatGPT provided guidance on how to connect the application to MongoDB, configure Mongoose models, and properly perform create, read, update, and delete operations within route files. This support helped clarify best practices for organizing routes and ensuring reliable database interaction. It also helped with server backend routes and CRUD operations
+
+Example Prompts Used
+
+“How should I structure Express routes for modular CRUD collections?”
+
+“How do I embed stadiums inside a MongoDB city document?”
+
+“How do I update nested arrays in MongoDB?”
+
+“How do I reference players to teams using ObjectId?”
+
+“How do I populate a dropdown using fetch() from backend data?”
+
+“How do I filter one dropdown based on another selection?”
+
+“Why is my Express route returning undefined?”
+
 
 ---
 
@@ -130,4 +149,4 @@ The stadium field image used in this project was sourced from **Pexels** and is 
    <img width="1424" height="707" alt="Screenshot 2026-02-20 at 6 53 46 PM" src="https://github.com/user-attachments/assets/6906876d-137b-47db-bb85-f34e1005fbdf" />
 2. Infrastructure
   <img width="1415" height="702" alt="Screenshot 2026-02-20 at 6 54 26 PM" src="https://github.com/user-attachments/assets/f789d5f7-146e-473d-8969-d43363d43374" />
-4. Daniel add yours here 
+3. Daniel add yours here 
