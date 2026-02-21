@@ -1,4 +1,4 @@
-export default function displayTeam(team, parent) {
+export function displayTeam(team, parent) {
     const teamRow = document.createElement("tr");
     teamRow.classList.add("team-row");
 
@@ -52,7 +52,7 @@ export default function displayTeam(team, parent) {
     });
 }
 
-export default function displayPlayer(player, parent) {
+export function displayPlayer(player, parent) {
     const playerRow = document.createElement("tr");
     playerRow.classList.add("players-row");
     const playerName = document.createElement("td");
@@ -98,7 +98,7 @@ export default function displayPlayer(player, parent) {
     parent.appendChild(playerRow);
 }
 
-export default function createForm(document, fields, submitText, onSubmit) {
+export function createForm(document, fields, submitText, onSubmit) {
     const form = document.createElement("form");
     form.classList.add("input-form");
     fields.forEach(field => {
