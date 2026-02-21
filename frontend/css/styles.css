@@ -101,7 +101,7 @@ button:hover {
 }
 
 .team-row > td {
-    /* vertical-align: top; */
+    vertical-align: top;
 }
 
 .flag-img {
