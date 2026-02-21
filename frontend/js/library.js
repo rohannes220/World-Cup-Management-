@@ -107,6 +107,7 @@ export function createForm(document, fields, submitText, onSubmit) {
         const input = document.createElement("input");
         input.name = field.name;
         input.type = field.type || "text";
+        input.placeholder = field.placeholder || "";
         label.appendChild(input);
         form.appendChild(label);
     });

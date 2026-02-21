@@ -160,10 +160,10 @@ function addTeam() {
         getTeams();
     };
     const teamForm = createForm(document, [
-        { type: "text", placeholder: "Country Name" },
-        { type: "text", placeholder: "Country Code (e.g. US)" }, 
-        { type: "text", placeholder: "Group (e.g. A)" },
-        { type: "text", placeholder: "Formation (e.g. 4-3-3)" }
+        { type: "text", placeholder: "Country Name", name: "country" },
+        { type: "text", placeholder: "Country Code (e.g. US)", name: "countryCode" }, 
+        { type: "text", placeholder: "Group (e.g. A)", name: "group" },
+        { type: "text", placeholder: "Formation (e.g. 4-3-3)", name: "formation" }
     ], "Submit", submitFunction);
     teamForm.classList.add("team-form");
     const options = document.querySelector(".teams-options");
