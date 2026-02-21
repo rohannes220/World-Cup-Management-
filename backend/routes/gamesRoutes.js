@@ -1,17 +1,22 @@
 import express from "express";
-import { getAllGames, createGame, getGameById, updateGame, deleteGame } from "../controllers/gamesController.js";
+import { getGames, createGame, getGameById, updateGame, deleteGame, countGames } from "../controllers/gamesController.js";
 
 export default function gamesRoutes(db) {
   const router = express.Router();
 
   router.route("/")
-    .get(getAllGames)
+    .get(getGames)
     .post(createGame)
 
-  router.route("/:matchNo")
+  router.route("/stats")
+    .get(countGames)
+
+  router.route("/match/:matchNo")
     .get(getGameById)
     .put(updateGame)
     .delete(deleteGame)
+
+  
 
   return router;
 }

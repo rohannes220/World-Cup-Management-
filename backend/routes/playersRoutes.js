@@ -7,7 +7,7 @@ export default function playersRoutes(db) {
         .get(getPlayers)
         .post(createPlayer)
     
-    router.route("/:playerId")
+    router.route("/:name")
         .get(getPlayerById)
         .delete(deletePlayer)
         .put(updatePlayer)

@@ -3,10 +3,10 @@ import dotenv from "dotenv";
 import express from "express";
 import { connectDB } from "./db/dbConn.js";
 
-import citiesRoutes from "./routes/cities.js";
-import gamesRoutes from "./routes/games.js";
-import teamsRoutes from "./routes/teams.js";
-import playersRoutes from "./routes/players.js";
+import citiesRoutes from "./routes/citiesRoutes.js";
+import gamesRoutes from "./routes/gamesRoutes.js";
+import teamsRoutes from "./routes/teamsRoutes.js";
+import playersRoutes from "./routes/playersRoutes.js";
 
 const PORT = process.env.PORT || 10000;
 dotenv.config();

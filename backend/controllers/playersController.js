@@ -4,7 +4,7 @@ import { ObjectId } from "mongodb";
 export const getPlayers = async (req, res) => {
     const { countryCode, position, country, wins, losses, goals, assists, yellowCards, redCards } = req.query;
     let db = getDB();
-    const query = {};
+    let query = {};
     if (countryCode) query.countryCode = countryCode;
     if (position) query.position = position;
     if (country) query.country = country;
@@ -37,15 +37,16 @@ export const createPlayer = async (req, res) => {
 
 export const updatePlayer = async (req, res) => {
     let db = getDB();
-    const { playerId } = req.params;
+    const name  = req.params.name;
+    console.log("Updating player:", name);
     const updateData = req.body;
-    await db.collection("players").updateOne({ _id: new ObjectId(playerId) }, { $set: updateData });
+    await db.collection("players").updateOne({ name: name }, { $set: updateData });
     res.json({ message: "Player updated successfully" });
 }
 
 export const deletePlayer = async (req, res) => {
     let db = getDB();
-    const { playerId } = req.params;
-    await db.collection("players").deleteOne({ _id: new ObjectId(playerId) });
+    const { name } = req.params;
+    await db.collection("players").deleteOne({ name: name });
     res.json({ message: "Player deleted successfully" });
 }

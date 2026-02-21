@@ -11,7 +11,6 @@ let addingTeam = false;
 let addingPlayer = false;
 let viewingTeams = true;
 let viewingPlayers = false;
-let teams = [], players = [];
 
 async function getTeams() {
     const response = await fetch(`${API_URL}/api/teams`, {
@@ -31,7 +30,6 @@ async function getPlayers() {
     const playersResponse = await response.json();
     const playersTable = document.querySelector("#players-table");
     playersResponse.forEach(player => {
-        players.push(player);
         displayPlayer(player, playersTable);
     });
 }
@@ -60,13 +58,7 @@ function togglePlayers() {
     playersCard.classList.toggle("hidden");
 }
 
-function showStarters(teamId) {
-    const teamRow = document.querySelector(`tr[data-team-id="${teamId}"]`);
-    const playersHolder = teamRow.querySelector(".players-holder");
-    playersHolder.classList.toggle("hidden");
-}
-
-function editRow() {
+function editRow(document, row) {
 
 }
 
@@ -82,6 +74,40 @@ function editTeams() {
         editButton.addEventListener("click", () => {
             const teamId = row.getAttribute("data-team-id");
             // Implement edit functionality here
+            const existingEditForm = document.querySelector(".edit-form");
+            if (existingEditForm) {
+                existingEditForm.remove();
+            }
+            // const teamId = row.getAttribute("data-team-id");
+            const submitFunction = async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const updatedTeamData = {};
+                formData.forEach((value, key) => {
+                    updatedTeamData[key] = value;
+                });
+                await fetch(`${API_URL}/api/teams/${teamId}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"                    },
+                    body: JSON.stringify(updatedTeamData)
+                });
+                editForm.remove();
+                editingTeam = false;
+                getTeams();
+            };
+            const editForm = createForm(document, [
+                { type: "text", placeholder: "Country Name", name: "country" },
+                { type: "text", placeholder: "Country Code (e.g. US)", name: "countryCode" }, 
+                { type: "text", placeholder: "Group (e.g. A)", name: "group" },
+                { type: "text", placeholder: "Formation (e.g. 4-3-3)", name: "formation" }
+                ], 
+                "Submit", submitFunction);
+            editForm.classList.add("edit-form");
+            const options = document.querySelector(".teams-options");
+            options.after(editForm);
+
+
         });
         const deleteButton = document.createElement("button");
         deleteButton.classList.add("delete-team-button");
@@ -123,8 +149,45 @@ function editPlayers() {
             row.remove();
         });   
         editButton.addEventListener("click", () => {
-            const playerName = row.querySelector("td:nth-child(4)").textContent;
+            // const playerName = row.querySelector("td:nth-child(4)").textContent;
+            const existingEditForm = document.querySelector(".edit-form");
+            if (existingEditForm) {
+                existingEditForm.remove();
+            }
+            const playerName = row.querySelector("td:nth-child(1)").textContent;
             // Implement edit functionality here
+            const submitFunction = async (e) => {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const updatedPlayerData = {};
+                formData.forEach((value, key) => {
+                    updatedPlayerData[key] = value;
+                });
+                await fetch(`${API_URL}/api/players/${playerName}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"                    },
+                    body: JSON.stringify(updatedPlayerData)
+                });
+                editForm.remove();
+                editingPlayer = false;
+                getPlayers();
+            };
+            const editForm = createForm(document, [ 
+                { type: "text", placeholder: "Position", name: "position" },
+                { type: "text", placeholder: "Country", name: "country" },
+                { type: "text", placeholder: "Country Code (e.g. US)", name: "countryCode" },
+                { type: "number", placeholder: "Wins", name: "wins" },
+                { type: "number", placeholder: "Losses", name: "losses" },
+                { type: "number", placeholder: "Goals", name: "goals" },
+                { type: "number", placeholder: "Assists", name: "assists" },
+                { type: "number", placeholder: "Games Played", name: "gamesPlayed" },
+                { type: "number", placeholder: "Yellow Cards", name: "yellowCards" },
+                { type: "number", placeholder: "Red Cards", name: "redCards" }
+                ], "Submit", submitFunction);
+            editForm.classList.add("edit-form");
+            const options = document.querySelector(".players-options");
+            options.after(editForm);
         });
         row.appendChild(editButton);
         row.appendChild(deleteButton);
@@ -164,7 +227,8 @@ function addTeam() {
         { type: "text", placeholder: "Country Code (e.g. US)", name: "countryCode" }, 
         { type: "text", placeholder: "Group (e.g. A)", name: "group" },
         { type: "text", placeholder: "Formation (e.g. 4-3-3)", name: "formation" }
-    ], "Submit", submitFunction);
+        ], 
+        "Submit", submitFunction);
     teamForm.classList.add("team-form");
     const options = document.querySelector(".teams-options");
     options.after(teamForm);
@@ -180,121 +244,81 @@ function addPlayer() {
         return;
     }
     addingPlayer = true;
-    const playerForm = document.createElement("form");
-    playerForm.classList.add("player-form");
-    const nameInput = document.createElement("input");
-    nameInput.type = "text";
-    nameInput.placeholder = "Player Name";
-    const positionInput = document.createElement("input");
-    positionInput.type = "text";
-    positionInput.placeholder = "Position";
-    const countryInput = document.createElement("input");
-    countryInput.type = "text";
-    countryInput.placeholder = "Country";
-    const countryCodeInput = document.createElement("input");
-    countryCodeInput.type = "text";
-    countryCodeInput.placeholder = "Country Code (e.g. US)";
-    const winsInput = document.createElement("input");
-    winsInput.type = "text";
-    winsInput.placeholder = "Wins";
-    const lossesInput = document.createElement("input");
-    lossesInput.type = "text";
-    lossesInput.placeholder = "Losses";
-    const goalsInput = document.createElement("input");
-    goalsInput.type = "text";
-    goalsInput.placeholder = "Goals";
-    const assistsInput = document.createElement("input");
-    assistsInput.type = "text";
-    assistsInput.placeholder = "Assists";
-    const gamesPlayedInput = document.createElement("input");
-    gamesPlayedInput.type = "text";
-    gamesPlayedInput.placeholder = "Games Played";
-    const yellowCardsInput = document.createElement("input");
-    yellowCardsInput.type = "text";
-    yellowCardsInput.placeholder = "Yellow Cards";
-    const redCardsInput = document.createElement("input");
-    redCardsInput.type = "text";
-    redCardsInput.placeholder = "Red Cards";
-    
-    const submitButton = document.createElement("button");
-    submitButton.type = "submit";
-    submitButton.textContent = "Submit";
-
-    playerForm.appendChild(nameInput);
-    playerForm.appendChild(positionInput);
-    playerForm.appendChild(countryInput);
-    playerForm.appendChild(countryCodeInput);
-    playerForm.appendChild(winsInput);
-    playerForm.appendChild(lossesInput);
-    playerForm.appendChild(goalsInput);
-    playerForm.appendChild(assistsInput);
-    playerForm.appendChild(gamesPlayedInput);
-    playerForm.appendChild(yellowCardsInput);
-    playerForm.appendChild(redCardsInput);
-    playerForm.appendChild(submitButton);
-
-    playerForm.addEventListener("submit", async (e) => {
+    const submitFunction = async (e) => {
         e.preventDefault();
-        const newPlayerData= {
-            name: nameInput.value,
-            position: positionInput.value,
-            country: countryInput.value,
-            countryCode: countryCodeInput.value,
-            wins: winsInput.value,
-            losses: lossesInput.value,
-            goals: goalsInput.value,
-            assists: assistsInput.value,
-            gamesPlayed: gamesPlayedInput.value,
-            yellowCards: yellowCardsInput.value,
-            redCards: redCardsInput.value
-        };
+        const formData = new FormData(e.target);
+        const newPlayerData = {};
+        formData.forEach((value, key) => {
+            newPlayerData[key] = value;
+        });
         await fetch(`${API_URL}/api/players`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
-            },
+                "Content-Type": "application/json"            },
             body: JSON.stringify(newPlayerData)
         });
         playerForm.remove();
-        addingPlayer = false;
         getPlayers();
-    });
-    
+    }
+    const playerForm = createForm(document, [ 
+        { type: "text", placeholder: "Player Name", name: "name" },
+        { type: "text", placeholder: "Position", name: "position" },
+        { type: "text", placeholder: "Country", name: "country" },
+        { type: "text", placeholder: "Country Code (e.g. US)", name: "countryCode" },
+        { type: "number", placeholder: "Wins", name: "wins" },
+        { type: "number", placeholder: "Losses", name: "losses" },
+        { type: "number", placeholder: "Goals", name: "goals" },
+        { type: "number", placeholder: "Assists", name: "assists" },
+        { type: "number", placeholder: "Games Played", name: "gamesPlayed" },
+        { type: "number", placeholder: "Yellow Cards", name: "yellowCards" },
+        { type: "number", placeholder: "Red Cards", name: "redCards" }
+        ], 
+        "Submit", submitFunction);
+    playerForm.classList.add("player-form");
     const options = document.querySelector(".players-options");
     options.after(playerForm);
 }
 
-function filterPlayers() {
-    const filterForm = document.createElement("form");
-    filterForm.className = "filter-form";
-    const positionFilterInput = document.createElement("input");
-    positionFilterInput.type = "text";
-    positionFilterInput.placeholder = "Position";
-    const countryFilterInput = document.createElement("input");
-    countryFilterInput.type = "text";
-    countryFilterInput.placeholder = "Country";
-    const winsFilterInput = document.createElement("input");
-    winsFilterInput.type = "text";
-    winsFilterInput.placeholder = "Wins";
-    const submitButton = document.createElement("button");
-    submitButton.type = "submit";
-    submitButton.textContent = "Apply Filter";
-
-    filterForm.appendChild(positionFilterInput);
-    filterForm.appendChild(countryFilterInput);
-    filterForm.appendChild(winsFilterInput);
-    filterForm.appendChild(submitButton);
-
-    const options = document.querySelector(".players-options");
-    options.after(filterForm);
-
-    filterForm.addEventListener("submit", async (e) => {
+function filterTeams() {
+    const submitFunction = async (e) => {
         e.preventDefault();
-        currentFilter = {
-            position: positionFilterInput.value,
-            country: countryFilterInput.value,
-            wins: winsFilterInput.value
-        };
+        const formData = new FormData(e.target);
+        currentFilter = {};
+        formData.forEach((value, key) => {
+            currentFilter[key] = value;
+        });
+        const response = await fetch(`${API_URL}/api/teams?group=${currentFilter.group}&country=${currentFilter.country}`, {
+            method: "GET"
+        });
+        filterForm.remove();
+        filterActive = false;
+        const teamsResponse = await response.json();
+        const teamsTable = document.querySelector("#teams-table");
+        while (teamsTable.rows.length > 1) {
+            teamsTable.deleteRow(1);
+        }
+        teamsResponse.forEach(team => {
+            displayTeam(team, teamsTable);
+        });
+    };
+    const filterForm = createForm(document, [
+        { type: "text", placeholder: "Group", name: "group" },
+        { type: "text", placeholder: "Country", name: "country" }
+        ], 
+        "Apply Filter", submitFunction);
+    filterForm.classList.add("filter-form");
+    const options = document.querySelector(".teams-options");
+    options.after(filterForm);
+}
+
+function filterPlayers() {
+    const submitFunction = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        currentFilter = {};
+        formData.forEach((value, key) => {
+            currentFilter[key] = value;
+        });
         const response = await fetch(`${API_URL}/api/players?position=${currentFilter.position}&country=${currentFilter.country}&wins=${currentFilter.wins}`, {
             method: "GET"
         });
@@ -308,7 +332,16 @@ function filterPlayers() {
         playersResponse.forEach(player => {
             displayPlayer(player, playersTable);
         });
-    });
+    };
+    const filterForm = createForm(document, [
+        { type: "text", placeholder: "Position", name: "position" },
+        { type: "text", placeholder: "Country", name: "country" },
+        { type: "number", placeholder: "Wins", name: "wins" }
+        ], 
+        "Apply Filter", submitFunction);
+    filterForm.classList.add("filter-form");
+    const options = document.querySelector(".players-options");
+    options.after(filterForm);
 }
 
 //
@@ -346,6 +379,17 @@ editPlayersButton.addEventListener("click", () => {
         const deleteButtons = document.querySelectorAll(".delete-player-button");
         editButtons.forEach(button => button.remove());
         deleteButtons.forEach(button => button.remove());
+    }
+});
+filterTeamsButton.addEventListener("click", () => {
+    filterActive = !filterActive;
+    if (filterActive) {
+        filterTeams();
+    } else {
+        const filterForm = document.querySelector(".filter-form");
+        if (filterForm) {
+            filterForm.remove();
+        }
     }
 });
 filterPlayersButton.addEventListener("click", () => {

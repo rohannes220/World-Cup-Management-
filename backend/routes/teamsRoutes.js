@@ -1,11 +1,11 @@
 import express from "express";
-import { getAllTeams, createTeam, getTeamById, deleteTeam, updateTeam } from "../controllers/teamsController.js";
+import { getTeams, createTeam, getTeamById, deleteTeam, updateTeam } from "../controllers/teamsController.js";
 
 export default function teamsRoutes(db) {
     const router = express.Router();
 
     router.route("/")
-        .get(getAllTeams)
+        .get(getTeams)
         .post(createTeam)
     
     router.route("/:teamId")

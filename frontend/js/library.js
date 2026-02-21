@@ -1,3 +1,9 @@
+export function showStarters(teamId) {
+    const teamRow = document.querySelector(`tr[data-team-id="${teamId}"]`);
+    const playersHolder = teamRow.querySelector(".players-holder");
+    playersHolder.classList.toggle("hidden");
+}
+
 export function displayTeam(team, parent) {
     const teamRow = document.createElement("tr");
     teamRow.classList.add("team-row");
@@ -84,16 +90,7 @@ export function displayPlayer(player, parent) {
     playerYellowCards.textContent = `${player.yellowCards}`;
     const playerRedCards = document.createElement("td");
     playerRedCards.textContent = `${player.redCards}`;
-    playerRow.appendChild(playerName);
-    playerRow.appendChild(country);
-    playerRow.appendChild(playerPosition);
-    
-    playerRow.appendChild(playerWins);
-    playerRow.appendChild(playerLosses);
-    playerRow.appendChild(playerGoals);
-    playerRow.appendChild(playerAssists);
-    playerRow.appendChild(playerYellowCards);
-    playerRow.appendChild(playerRedCards);
+    playerRow.append(playerName, country, playerPosition, playerWins, playerLosses, playerGoals, playerAssists, playerYellowCards, playerRedCards);
 
     parent.appendChild(playerRow);
 }

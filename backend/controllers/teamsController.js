@@ -2,9 +2,32 @@ import { getDB } from "../db/dbConn.js";
 import { ObjectId } from "mongodb";
 
 
-export const getAllTeams = async (req, res) => {
+export const getTeams = async (req, res) => {
+    const { group, countryCode, country, wins, losses, goalsFor, goalsAgainst } = req.query;
     let db = getDB();
-    const teams = await db.collection("teams").find({}).sort({ country: 1 }).toArray();
+    let query = {};
+    if (group) {
+        query.group = group;
+    }
+    if (countryCode) {
+        query.countryCode = countryCode;
+    }
+    if (country) {
+        query.country = country;
+    }
+    if (wins) {
+        query.wins = parseInt(wins);
+    }
+    if (losses) {
+        query.losses = parseInt(losses);
+    }
+    if (goalsFor) {
+        query.goalsFor = parseInt(goalsFor);
+    }
+    if (goalsAgainst) {
+        query.goalsAgainst = parseInt(goalsAgainst);
+    }
+    const teams = await db.collection("teams").find(query).sort({ country: 1 }).toArray();
     res.json(teams);
 }
 
