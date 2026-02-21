@@ -18,7 +18,6 @@ The project is built using:
 * **MongoDB** (Database)
 * **Vanilla JavaScript** with client-side rendering (Frontend)
 
-The architecture is modular, separating Infrastructure management from Team management while maintaining consistent and scalable data relationships.
 
 ---
 
@@ -114,7 +113,7 @@ AI Usage
 
 ChatGPT (GPT-5.2 model) was used to assist with backend architecture, CRUD operations, and frontend–backend integration. It helped clarify how to structure Express routes, organize MongoDB collections, and properly implement create, read, update, and delete functionality for cities, stadiums, games, teams, and players.
 
-ChatGPT was also used to help design and implement dynamic dropdown features, including populating dropdown menus from backend data and filtering stadium options based on a selected city. Additionally, it assisted with debugging route responses, updating nested arrays in MongoDB (such as stadiums embedded within cities), and improving overall backend structure. All core implementation, routing, and application logic were written and structured by the team, with ChatGPT serving as a guidance and troubleshooting tool.
+ChatGPT was also used to help design and implement dynamic dropdown features, including populating dropdown menus from backend data and filtering stadium options based on a selected city. Additionally, it assisted with debugging route responses, and improving overall backend structure. 
 
 ChatGPT provided guidance on how to connect the application to MongoDB, configure Mongoose models, and properly perform create, read, update, and delete operations within route files. This support helped clarify best practices for organizing routes and ensuring reliable database interaction. It also helped with server backend routes and CRUD operations
 
