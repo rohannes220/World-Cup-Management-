@@ -8,7 +8,7 @@ import gamesRoutes from "./routes/games.js";
 import teamsRoutes from "./routes/teams.js";
 import playersRoutes from "./routes/players.js";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 dotenv.config();
 const client = connectDB();
 
@@ -24,6 +24,3 @@ app.use("/api/players", playersRoutes(client.db("WorldCup")));
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
 });
-    
-// ideas:
-// add map
