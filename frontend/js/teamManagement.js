@@ -159,12 +159,12 @@ function addTeam() {
         teamForm.remove();
         getTeams();
     };
-    const teamForm = createForm(document, "team-form", [
+    const teamForm = createForm(document, [
         { type: "text", placeholder: "Country Name" },
         { type: "text", placeholder: "Country Code (e.g. US)" }, 
         { type: "text", placeholder: "Group (e.g. A)" },
         { type: "text", placeholder: "Formation (e.g. 4-3-3)" }
-    ], submitFunction);
+    ], "Submit", submitFunction);
     teamForm.classList.add("team-form");
     const options = document.querySelector(".teams-options");
     options.after(teamForm);
