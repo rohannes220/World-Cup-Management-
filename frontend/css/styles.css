@@ -101,7 +101,7 @@ button:hover {
 }
 
 .team-row > td {
-    vertical-align: top;
+    /* vertical-align: top; */
 }
 
 .flag-img {
@@ -120,5 +120,22 @@ button:hover {
 }
 
 .players-row > td{
+    text-align: left;
+}
+
+.left {
+    text-align: left;
+}
+
+table {
+    border-spacing: 10px;
+}
+
+table img {
+    vertical-align: middle;
+    margin: auto;
+}
+
+.country-cell {
     text-align: left;
 }

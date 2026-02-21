@@ -13,7 +13,6 @@
         <nav>
             <a href="index.html">Home</a>
             <a href="infrastructure.html">Infrastructure</a>
-            <a href="Data.html">Records</a>
             <a href="teams.html">Statistics</a>
         </nav>
     </header>
@@ -23,13 +22,14 @@
     <div class="cards-container">
         
         <div class="card teams-card">
-            <div class="options">
+            <div class="options teams-options">
                 <button class="edit-teams-button">Edit Teams</button>
                 <button class="add-teams-button">Add Team</button>
+                <button class="filter-button filter-teams-button">Filter</button>
             </div>
             <div class="output-box">
                 <table id="teams-table">
-                    <tr>
+                    <tr class="table-headers">
                         <th class="country-header">Country</th>
                         <th class="blank-header"></th>
                         <th>Group</th>
@@ -40,9 +40,10 @@
             </div>
         </div>
             <div class="card players-card hidden">
-                <div class="options">
+                <div class="options players-options">
                     <button class="edit-players-button">Edit Players</button>
-                    <button class="add-player-button">Add Player</button>
+                    <button class="add-players-button">Add Player</button>
+                    <button class="filter-button filter-players-button">Filter</button>
                 </div>
                 <div class="output-box">
                     <table id="players-table">
@@ -50,6 +51,12 @@
                             <th>Name</th>
                             <th>Position</th>
                             <th class="country-header">Country</th>
+                            <th>Wins</th>
+                            <th>Losses</th>
+                            <th>Goals</th>
+                            <th>Assists</th>
+                            <th>Yellow Cards</th>
+                            <th>Red Cards</th>
                         </tr>
                     </table>
             </div>

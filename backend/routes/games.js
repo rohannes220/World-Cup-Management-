@@ -1,5 +1,5 @@
 import express from "express";
-import { getAllGames, createGame, getGameByMatchNo, updateGame, deleteGame } from "../controllers/gamesController.js";
+import { getAllGames, createGame, getGameById, updateGame, deleteGame } from "../controllers/gamesController.js";
 
 export default function gamesRoutes(db) {
   const router = express.Router();
@@ -9,7 +9,7 @@ export default function gamesRoutes(db) {
     .post(createGame)
 
   router.route("/:matchNo")
-    .get(getGameByMatchNo)
+    .get(getGameById)
     .put(updateGame)
     .delete(deleteGame)
 

@@ -3,98 +3,155 @@ let selectedTeamId = null;
 let selectedPlayerId = null;
 let editingTeam = false;
 let editingPlayer = false;
+let filterActive = false;
+let currentFilter = null;
+let addingTeam = false;
+let addingPlayer = false;
+let viewingTeams = true;
+let viewingPlayers = false;
 let teams = [], players = [];
 
-async function getData() {
+function displayTeam(team, parent) {
+    const teamRow = document.createElement("tr");
+    teamRow.classList.add("team-row");
+
+    const country = document.createElement("td");
+    country.classList.add("country-cell");
+    const countryName = document.createElement("span");
+    countryName.classList.add("country-name");
+    countryName.textContent = team.country;
+    
+    const flagImg = document.createElement("img");
+    flagImg.src = `https://flagcdn.com/w320/${team.countryCode.toLowerCase()}.png`;
+    flagImg.alt = `${team.country} Flag`;
+    flagImg.classList.add("flag-img");
+    country.appendChild(flagImg);
+    country.appendChild(countryName);
+    
+    teamRow.appendChild(country);
+
+    const group = document.createElement("td");
+    group.textContent = `${team.group}`;
+    teamRow.appendChild(group);
+
+    const formation = document.createElement("td");
+    formation.textContent = `${team.formation}`;
+    teamRow.appendChild(formation);
+    
+    const blankCell2 = document.createElement("td");
+    blankCell2.classList.add("blank-cell");
+    const playersHolder = document.createElement("div");
+    playersHolder.classList.add("players-holder");
+    blankCell2.appendChild(playersHolder);
+    teamRow.appendChild(blankCell2);
+
+    const showPlayersButton = document.createElement("button");
+    showPlayersButton.textContent = "Show Starters";
+    showPlayersButton.addEventListener("click", () => showStarters(team._id));
+    teamRow.appendChild(showPlayersButton);
+    teamRow.setAttribute("data-team-id", team._id);
+    parent.appendChild(teamRow);
+
+    team.starting11.forEach(player => {
+        const playerRow = document.createElement("tr");
+        playersHolder.classList.add("hidden");
+        const playerName = document.createElement("td");
+        playerName.textContent = `${player.name}`;
+        const playerPosition = document.createElement("td");
+        playerPosition.textContent = `${player.position}`;
+        playerRow.appendChild(playerName);
+        playerRow.appendChild(playerPosition);
+        playersHolder.appendChild(playerRow);            
+    });
+}
+
+async function getTeams() {
     const response = await fetch(`${API_URL}/api/teams`, {
         method: "GET"
     });
     const teamsResponse = await response.json();
-    const teamsList = document.getElementById("teams-table");
+    const teamsTable = document.getElementById("teams-table");
     teamsResponse.forEach(team => {
-        teams.push(team);
-        const teamRow = document.createElement("tr");
-        teamRow.classList.add("team-row");
+        displayTeam(team, teamsTable);
+    });
+}
 
-        const country = document.createElement("td");
-        const countryName = document.createElement("td");
-        countryName.classList.add("country-name");
-        countryName.textContent = team.country;
-        
-        const flagImg = document.createElement("img");
-        flagImg.src = `https://flagcdn.com/w320/${team.countryCode.toLowerCase()}.png`;
-        flagImg.alt = `${team.country} Flag`;
-        flagImg.classList.add("flag-img");
-        country.appendChild(countryName);
-        teamRow.appendChild(flagImg);
-        teamRow.appendChild(country);
+function displayPlayer(player, parent) {
+    const playerRow = document.createElement("tr");
+    playerRow.classList.add("players-row");
+    const playerName = document.createElement("td");
+    playerName.classList.add("left");
+    playerName.textContent = `${player.name}`;
+    const playerPosition = document.createElement("td");
+    playerPosition.classList.add("left");
+    playerPosition.textContent = `${player.position}`;
+    const country = document.createElement("td");
+    country.classList.add("country-cell");
+    const countryName = document.createElement("span");
+    countryName.classList.add("country-name");
+    countryName.textContent = player.country;
+    const flagImg = document.createElement("img");
+    flagImg.src = `https://flagcdn.com/w320/${player.countryCode.toLowerCase()}.png`;
+    flagImg.alt = `${player.country} Flag`;
+    flagImg.classList.add("flag-img");
+    country.appendChild(flagImg);
+    country.appendChild(countryName);
+    const playerWins = document.createElement("td");
+    playerWins.textContent = `${player.wins}`;
+    const playerLosses = document.createElement("td");
+    playerLosses.textContent = `${player.losses}`;
+    const playerGoals = document.createElement("td");
+    playerGoals.textContent = `${player.goals}`;
+    const playerAssists = document.createElement("td");
+    playerAssists.textContent = `${player.assists}`;
+    const playerYellowCards = document.createElement("td");
+    playerYellowCards.textContent = `${player.yellowCards}`;
+    const playerRedCards = document.createElement("td");
+    playerRedCards.textContent = `${player.redCards}`;
+    playerRow.appendChild(playerName);
+    playerRow.appendChild(country);
+    playerRow.appendChild(playerPosition);
+    
+    playerRow.appendChild(playerWins);
+    playerRow.appendChild(playerLosses);
+    playerRow.appendChild(playerGoals);
+    playerRow.appendChild(playerAssists);
+    playerRow.appendChild(playerYellowCards);
+    playerRow.appendChild(playerRedCards);
 
-        const group = document.createElement("td");
-        group.textContent = `${team.group}`;
-        teamRow.appendChild(group);
+    parent.appendChild(playerRow);
+}
 
-        const formation = document.createElement("td");
-        formation.textContent = `${team.formation}`;
-        teamRow.appendChild(formation);
-        
-        const blankCell2 = document.createElement("td");
-        blankCell2.classList.add("blank-cell");
-        const playersHolder = document.createElement("div");
-        playersHolder.classList.add("players-holder");
-        blankCell2.appendChild(playersHolder);
-        teamRow.appendChild(blankCell2);
-
-        const showPlayersButton = document.createElement("button");
-        showPlayersButton.textContent = "Show Starters";
-        showPlayersButton.addEventListener("click", () => showStarters(team._id));
-        teamRow.appendChild(showPlayersButton);
-
-        teamRow.setAttribute("data-team-id", team._id);
-        teamsList.appendChild(teamRow);
-
-        team.starting11.forEach(player => {
-            players.push(player);
-            const playerRow = document.createElement("tr");
-            playersHolder.classList.add("hidden");
-            const playerName = document.createElement("td");
-            playerName.textContent = `${player.name}`;
-            const playerPosition = document.createElement("td");
-            playerPosition.textContent = `${player.position}`;
-            playerRow.appendChild(playerName);
-            playerRow.appendChild(playerPosition);
-            playersHolder.appendChild(playerRow);
-
-            const playersTable = document.querySelector("#players-table");
-            const playerRow2 = document.createElement("tr");
-            playerRow2.classList.add("players-row");
-            const playerName2 = document.createElement("td");
-            playerName2.textContent = `${player.name}`;
-            const playerPosition2 = document.createElement("td");
-            playerPosition2.textContent = `${player.position}`;
-            
-
-            const country = document.createElement("td");
-            const countryName = document.createElement("span");
-            countryName.classList.add("country-name");
-            countryName.textContent = team.country;
-            
-            const flagImg = document.createElement("img");
-            flagImg.src = `https://flagcdn.com/w320/${team.countryCode.toLowerCase()}.png`;
-            flagImg.alt = `${team.country} Flag`;
-            flagImg.classList.add("flag-img");
-            country.appendChild(flagImg);
-            country.appendChild(countryName);
-            
-            playerRow2.appendChild(country);
-            playerRow2.appendChild(playerName2);
-            playerRow2.appendChild(playerPosition2);
-            
-            playersTable.appendChild(playerRow2);
-        });
+async function getPlayers() {
+    const response = await fetch(`${API_URL}/api/players`, {
+        method: "GET"
+    });
+    const playersResponse = await response.json();
+    const playersTable = document.querySelector("#players-table");
+    playersResponse.forEach(player => {
+        players.push(player);
+        displayPlayer(player, playersTable);
     });
 }
 
 function toggleTeams() {
+    if (viewingTeams) {
+        return;
+    }
+    viewingTeams = true;
+    viewingPlayers = false;
+    const teamsCard = document.querySelector(".teams-card");
+    const playersCard = document.querySelector(".players-card");
+    teamsCard.classList.toggle("hidden");
+    playersCard.classList.toggle("hidden");
+}
+
+function togglePlayers() {
+    if (viewingPlayers) {
+        return;
+    }
+    viewingPlayers = true;
+    viewingTeams = false;
     const teamsCard = document.querySelector(".teams-card");
     const playersCard = document.querySelector(".players-card");
     teamsCard.classList.toggle("hidden");
@@ -173,6 +230,15 @@ function editPlayers() {
 }
 
 function addTeam() {
+    addingTeam = !addingTeam;
+    if (!addingTeam) {
+        const existingTeamForm = document.querySelector(".team-form");
+        if (existingTeamForm) {
+            existingTeamForm.remove();
+        }
+        return;
+    }
+    addingTeam = true;
     const teamForm = document.createElement("form");
     teamForm.classList.add("team-form");
     const countryInput = document.createElement("input");
@@ -189,7 +255,7 @@ function addTeam() {
     formationInput.placeholder = "Formation (e.g. 4-3-3)";
     const submitButton = document.createElement("button");
     submitButton.type = "submit";
-    submitButton.textContent = "Add Team";
+    submitButton.textContent = "Submit";
     teamForm.appendChild(countryInput);
     teamForm.appendChild(countryCodeInput);
     teamForm.appendChild(groupInput);
@@ -212,25 +278,166 @@ function addTeam() {
             body: JSON.stringify(newTeam)
         });
         teamForm.remove();
-        getData();
+        getTeams();
     });
-    const options = document.querySelector(".options");
+    const options = document.querySelector(".teams-options");
     options.after(teamForm);
 }
 
 function addPlayer() {
+    addingPlayer = !addingPlayer;
+    if (!addingPlayer) {
+        const existingPlayerForm = document.querySelector(".player-form");
+        if (existingPlayerForm) {
+            existingPlayerForm.remove();
+        }
+        return;
+    }
+    addingPlayer = true;
+    const playerForm = document.createElement("form");
+    playerForm.classList.add("player-form");
+    const nameInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.placeholder = "Player Name";
+    const positionInput = document.createElement("input");
+    positionInput.type = "text";
+    positionInput.placeholder = "Position";
+    const countryInput = document.createElement("input");
+    countryInput.type = "text";
+    countryInput.placeholder = "Country";
+    const countryCodeInput = document.createElement("input");
+    countryCodeInput.type = "text";
+    countryCodeInput.placeholder = "Country Code (e.g. US)";
+    const winsInput = document.createElement("input");
+    winsInput.type = "text";
+    winsInput.placeholder = "Wins";
+    const lossesInput = document.createElement("input");
+    lossesInput.type = "text";
+    lossesInput.placeholder = "Losses";
+    const goalsInput = document.createElement("input");
+    goalsInput.type = "text";
+    goalsInput.placeholder = "Goals";
+    const assistsInput = document.createElement("input");
+    assistsInput.type = "text";
+    assistsInput.placeholder = "Assists";
+    const gamesPlayedInput = document.createElement("input");
+    gamesPlayedInput.type = "text";
+    gamesPlayedInput.placeholder = "Games Played";
+    const yellowCardsInput = document.createElement("input");
+    yellowCardsInput.type = "text";
+    yellowCardsInput.placeholder = "Yellow Cards";
+    const redCardsInput = document.createElement("input");
+    redCardsInput.type = "text";
+    redCardsInput.placeholder = "Red Cards";
+    
+    const submitButton = document.createElement("button");
+    submitButton.type = "submit";
+    submitButton.textContent = "Submit";
+
+    playerForm.appendChild(nameInput);
+    playerForm.appendChild(positionInput);
+    playerForm.appendChild(countryInput);
+    playerForm.appendChild(countryCodeInput);
+    playerForm.appendChild(winsInput);
+    playerForm.appendChild(lossesInput);
+    playerForm.appendChild(goalsInput);
+    playerForm.appendChild(assistsInput);
+    playerForm.appendChild(gamesPlayedInput);
+    playerForm.appendChild(yellowCardsInput);
+    playerForm.appendChild(redCardsInput);
+    playerForm.appendChild(submitButton);
+
+    playerForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const newPlayerData= {
+            name: nameInput.value,
+            position: positionInput.value,
+            country: countryInput.value,
+            countryCode: countryCodeInput.value,
+            wins: winsInput.value,
+            losses: lossesInput.value,
+            goals: goalsInput.value,
+            assists: assistsInput.value,
+            gamesPlayed: gamesPlayedInput.value,
+            yellowCards: yellowCardsInput.value,
+            redCards: redCardsInput.value
+        };
+        await fetch(`${API_URL}/api/players`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newPlayerData)
+        });
+        playerForm.remove();
+        addingPlayer = false;
+        getPlayers();
+    });
+    
+    const options = document.querySelector(".players-options");
+    options.after(playerForm);
+}
+
+function filterPlayers() {
+    const filterForm = document.createElement("form");
+    filterForm.className = "filter-form";
+    const positionFilterInput = document.createElement("input");
+    positionFilterInput.type = "text";
+    positionFilterInput.placeholder = "Position";
+    const countryFilterInput = document.createElement("input");
+    countryFilterInput.type = "text";
+    countryFilterInput.placeholder = "Country";
+    const winsFilterInput = document.createElement("input");
+    winsFilterInput.type = "text";
+    winsFilterInput.placeholder = "Wins";
+    const submitButton = document.createElement("button");
+    submitButton.type = "submit";
+    submitButton.textContent = "Apply Filter";
+
+    filterForm.appendChild(positionFilterInput);
+    filterForm.appendChild(countryFilterInput);
+    filterForm.appendChild(winsFilterInput);
+    filterForm.appendChild(submitButton);
+
+    const options = document.querySelector(".players-options");
+    options.after(filterForm);
+
+    filterForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        currentFilter = {
+            position: positionFilterInput.value,
+            country: countryFilterInput.value,
+            wins: winsFilterInput.value
+        };
+        const response = await fetch(`${API_URL}/api/players?position=${currentFilter.position}&country=${currentFilter.country}&wins=${currentFilter.wins}`, {
+            method: "GET"
+        });
+        filterForm.remove();
+        filterActive = false;
+        const playersResponse = await response.json();
+        const playersTable = document.querySelector("#players-table");
+        while (playersTable.rows.length > 1) {
+            playersTable.deleteRow(1);
+        }
+        playersResponse.forEach(player => {
+            displayPlayer(player, playersTable);
+        });
+    });
 }
 
 //
-getData();
+getTeams();
+getPlayers();
 const teamsButton = document.querySelector(".teams-button");
 const playersButton = document.querySelector(".players-button");
 const addTeamsButton = document.querySelector(".add-teams-button");
-const addPlayersButton = document.querySelector(".add-player-button");
+const addPlayersButton = document.querySelector(".add-players-button");
+const filterTeamsButton = document.querySelector(".filter-teams-button");
+const filterPlayersButton = document.querySelector(".filter-players-button");
 addTeamsButton.addEventListener("click", addTeam);
 addPlayersButton.addEventListener("click", addPlayer);
 teamsButton.addEventListener("click", toggleTeams);
-playersButton.addEventListener("click", toggleTeams);
+playersButton.addEventListener("click", togglePlayers);
 const editTeamsButton = document.querySelector(".edit-teams-button");
 const editPlayersButton = document.querySelector(".edit-players-button");
 editTeamsButton.addEventListener("click", () => {
@@ -253,5 +460,16 @@ editPlayersButton.addEventListener("click", () => {
         const deleteButtons = document.querySelectorAll(".delete-player-button");
         editButtons.forEach(button => button.remove());
         deleteButtons.forEach(button => button.remove());
+    }
+});
+filterPlayersButton.addEventListener("click", () => {
+    filterActive = !filterActive;
+    if (filterActive) {
+        filterPlayers();
+    } else {
+        const filterForm = document.querySelector(".filter-form");
+        if (filterForm) {
+            filterForm.remove();
+        }
     }
 });

@@ -15,7 +15,7 @@ export const connectDB = () => {
 
 export const getDB = () => {
     if (!client) {
-        throw new Error("Database not connected");
+        client = connectDB();
     }
     return client.db("WorldCup");
 }

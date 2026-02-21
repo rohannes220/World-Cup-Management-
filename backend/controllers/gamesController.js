@@ -1,9 +1,9 @@
-import { getDB } from "../db/dbConn";
+import { getDB } from "../db/dbConn.js";
 
-const db = getDB();
 
 export const getAllGames = async (req,res) => {
     try {
+        let db = getDB();
         const games = await db.collection("games").find({}).toArray();     
         res.json(games);
     } catch (err) {
@@ -13,6 +13,7 @@ export const getAllGames = async (req,res) => {
 
 export const getGameById = async (req, res) => {
     try {
+        let db = getDB();
         const { gameId } = req.params;
         const game = await db.collection("games").findOne({ gameId: Number(gameId) });
         res.json(game);
@@ -23,6 +24,7 @@ export const getGameById = async (req, res) => {
 
 export const createGame = async (req, res) => {
     try {
+        let db = getDB();
         const newGame = req.body;
         await db.collection("games").insertOne(newGame);        
         res.json({ message: "Game created successfully" });
@@ -33,6 +35,7 @@ export const createGame = async (req, res) => {
 
 export const updateGame = async (req, res) => {
     try {
+        let db = getDB();
         const { gameId } = req.params;
         const updatedData = req.body;
         await db.collection("games").updateOne({ gameId: Number(gameId) }, { $set: updatedData });
@@ -44,6 +47,7 @@ export const updateGame = async (req, res) => {
 
 export const deleteGame = async (req, res) => {
     try {
+        let db = getDB();
         const { gameId } = req.params;
         await db.collection("games").deleteOne({ gameId: Number(gameId) });
         res.json({ message: "Game deleted successfully" });
