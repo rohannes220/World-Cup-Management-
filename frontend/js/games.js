@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const gameAction = document.getElementById("gameAction");
   const outputBox = document.getElementById("gameOutput");
-  const API = "https://world-cup-management.onrender.com/";
+  const API = "https://world-cup-management.onrender.com";
 
   if (!gameAction || !outputBox) {
     console.error("Game elements not found");

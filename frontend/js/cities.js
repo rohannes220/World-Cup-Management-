@@ -1,4 +1,4 @@
-const API = "https://world-cup-management.onrender.com/";
+const API = "https://world-cup-management.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
   const cityAction = document.getElementById("cityAction");
