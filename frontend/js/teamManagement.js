@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+const API_URL = "https://world-cup-management.onrender.com/";
 let selectedTeamId = null;
 let selectedPlayerId = null;
 let editingTeam = false;
