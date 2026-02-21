@@ -2,7 +2,8 @@
 
 # World Cup Management
 
-By Daniel Jilek - jilek.d@northeastern.edu, Rohan Kumar - kumar.rohan1@northeastern.edu
+By Daniel Jilek - jilek.d@northeastern.edu, 
+Rohan Kumar - kumar.rohan1@northeastern.edu
 Class: Web Development
 Term: Spring 2026
 Professor John Guerra
