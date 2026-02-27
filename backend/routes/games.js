@@ -9,7 +9,8 @@ export default function gamesRoutes(db) {
   });
 
   router.get("/group", async (req, res) => {
-    const games = await db.collection("games")
+    const games = await db
+      .collection("games")
       .find({ round: "Group Stage" })
       .sort({ matchNo: 1 })
       .toArray();
@@ -17,7 +18,8 @@ export default function gamesRoutes(db) {
   });
 
   router.get("/knockout", async (req, res) => {
-    const games = await db.collection("games")
+    const games = await db
+      .collection("games")
       .find({ round: { $ne: "Group Stage" } })
       .toArray();
     res.json(games);
@@ -34,8 +36,7 @@ export default function gamesRoutes(db) {
 
   router.get("/stats/group", async (req, res) => {
     try {
-      const totalGroupStage = await db.collection("games")
-        .countDocuments({ round: "Group Stage" });
+      const totalGroupStage = await db.collection("games").countDocuments({ round: "Group Stage" });
       res.json({ totalGroupStage });
     } catch (error) {
       res.status(500).json({ message: "Error retrieving group stage games" });
@@ -44,7 +45,8 @@ export default function gamesRoutes(db) {
 
   router.get("/stats/knockout", async (req, res) => {
     try {
-      const totalKnockout = await db.collection("games")
+      const totalKnockout = await db
+        .collection("games")
         .countDocuments({ round: { $ne: "Group Stage" } });
       res.json({ totalKnockout });
     } catch (error) {
@@ -63,15 +65,14 @@ export default function gamesRoutes(db) {
     res.json(game);
   });
 
+  // How are users supposed to know what match is associated with a number
   router.put("/match/:matchNo", async (req, res) => {
     const matchNo = Number(req.params.matchNo);
     const { winner } = req.body;
 
-    const result = await db.collection("games").updateOne(
-      { matchNo },
-      { $set: { winner } }
-    );
+    const result = await db.collection("games").updateOne({ matchNo }, { $set: { winner } });
 
+    // Good handling
     if (result.matchedCount === 0) {
       return res.status(404).json({ message: "Game not found" });
     }
@@ -87,7 +88,7 @@ export default function gamesRoutes(db) {
       homeTeam,
       awayTeam,
       round: "Friendly",
-      winner: null
+      winner: null,
     });
 
     res.json({ message: "Friendly match scheduled successfully." });
@@ -107,3 +108,4 @@ export default function gamesRoutes(db) {
 
   return router;
 }
+

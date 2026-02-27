@@ -1,71 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
-<head>
+  <head>
     <title>Infrastructure Management</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
 
-<body>
-
+  <body>
     <header class="toolbar">
-        <h1>World Cup Manager</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="infrastructure.html">Infrastructure</a>
-        </nav>
+      <h1>World Cup Manager</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="infrastructure.html">Infrastructure</a>
+      </nav>
     </header>
 
     <h2>Infrastructure Management</h2>
 
+    <!-- I wonder if buttons would offer a better experience than drop downs here      -->
     <div class="cards-container">
+      <div class="card">
+        <h3>Game Management</h3>
 
-        <div class="card">
-            <h3>Game Management</h3>
+        <select id="gameAction">
+          <option value="">Select Action</option>
+          <option value="createFriendly">Create Game</option>
+          <option value="viewGroup">View Group Stage Games</option>
+          <option value="viewKnockout">View Knockout Games</option>
+          <option value="updateGame">Update Game</option>
+          <option value="totalGames">Total Games</option>
+          <option value="totalGroup">Total Group Stage Games</option>
+          <option value="totalKnockout">Total Knockout Games</option>
+          <option value="deleteGame">Delete Game</option>
+        </select>
 
-            <select id="gameAction">
-                <option value="">Select Action</option>
-                <option value="createFriendly">Create Game</option>
-                <option value="viewGroup">View Group Stage Games</option>
-                <option value="viewKnockout">View Knockout Games</option>
-                <option value="updateGame">Update Game</option>
-                <option value="totalGames">Total Games</option>
-                <option value="totalGroup">Total Group Stage Games</option>
-                <option value="totalKnockout">Total Knockout Games</option>
-                <option value="deleteGame">Delete Game</option>
-            </select>
+        <div id="gameFormContainer"></div>
+        <div class="output-box" id="gameOutput"></div>
+      </div>
 
-            <div id="gameFormContainer"></div>
-            <div class="output-box" id="gameOutput"></div>
-        </div>
+      <div class="card">
+        <h3>City Management</h3>
 
-        <div class="card">
-            <h3>City Management</h3>
+        <select id="cityAction">
+          <option value="">Select Action</option>
+          <option value="addCity">Create City</option>
+          <option value="viewCities">View All Cities</option>
+          <option value="viewStadiums">View All Stadiums</option>
+          <option value="updateStadium">Update Stadium</option>
+          <option value="totalCities">Total Cities</option>
+          <option value="totalCountries">Total Countries</option>
+          <option value="totalStadiums">Total Stadiums</option>
+          <option value="deleteCity">Delete City</option>
+          <option value="deleteStadium">Delete Stadium</option>
+        </select>
 
-            <select id="cityAction">
-                <option value="">Select Action</option>
-                <option value="addCity">Create City</option>
-                <option value="viewCities">View All Cities</option>
-                <option value="viewStadiums">View All Stadiums</option>
-                <option value="updateStadium">Update Stadium</option>
-                <option value="totalCities">Total Cities</option>
-                <option value="totalCountries">Total Countries</option>
-                <option value="totalStadiums">Total Stadiums</option>
-                <option value="deleteCity">Delete City</option>
-                <option value="deleteStadium">Delete Stadium</option>
-            </select>
-
-     
-
-            <div id="cityFormContainer"></div>
-            <div class="output-box" id="cityOutput"></div>
-        </div>
-
+        <div id="cityFormContainer"></div>
+        <div class="output-box" id="cityOutput"></div>
+      </div>
     </div>
 
     <script type="module" src="js/cities.js"></script>
     <script type="module" src="js/games.js"></script>
-
-</body>
-
+  </body>
 </html>
+
